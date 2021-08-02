@@ -10,9 +10,6 @@ import telebot
 from telebot import types
 
 bot = telebot.TeleBot(config.token_main)
-
-
-
 @bot.message_handler(commands=['start', 'help', 'admin'])
 def handler_commands (message):
     try:
