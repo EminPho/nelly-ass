@@ -1,19 +1,12 @@
 # -*- coding: utf-8 -*-
 
-import config
-import user_config
-import content
-
-import time
-import sqlite3
-import telebot
+import config, user_config, content
+import time, sqlite3, telebot
 from telebot import types
-
-
-
-
-
 bot = telebot.TeleBot(config.token_main)
+
+
+
 @bot.message_handler(commands=['start', 'help', 'admin'])
 def handler_commands (message):
     try:
@@ -47,7 +40,7 @@ def handler_commands (message):
                 main_markup.row(but21, but22, but23, but24, but25, but26, but27, but28, but29)
                 main_markup.row(but31, but32)
                 # Отправка стикера приветствия и главной клавиатуры
-                sticker = open (config.sticker_funny, 'rb')
+                sticker = open (content.sticker_funny, 'rb')
                 bot.send_sticker (message.chat.id, sticker, reply_markup=main_markup)
                 # Отправка кнопки на подписаться
                 markup_type=types.InlineKeyboardMarkup()
@@ -79,98 +72,44 @@ def handler_commands (message):
 
 
 
-@bot.message_handler(content_types=['photo'])
+@bot.message_handler(content_types=["document", "photo"])
 def handler_file(message):
     try:
-        file_info = bot.get_file(message.photo[len(message.photo) - 1].file_id)
-        downloaded_file = bot.download_file(file_info.file_path)
-        src = 'users/' + message.chat.username + '/lesson_1/' + user_config.Emin_Pho.get('handover') + '/' + str(message.date)
-        with open(src, 'wb') as new_file:
-            new_file.write(downloaded_file)
+        if message.content_type == 'photo':
+            file_info = bot.get_file(message.photo[len(message.photo) - 1].file_id)
+            downloaded_file = bot.download_file(file_info.file_path)
+            src =  user_config.Emin_Pho.get ('content_src')+ message.chat.username + '/lesson_1/' + user_config.Emin_Pho.get('handover') + '/' + file_info.file_path
+            with open(src, 'wb') as new_file:
+                new_file.write(downloaded_file)
+        elif message.content_type == 'document':
+            file_info = bot.get_file(message.document.file_id)
+            downloaded_file = bot.download_file(file_info.file_path)
+            src =  user_config.Emin_Pho.get ('content_src')+ message.chat.username + '/lesson_1/' + user_config.Emin_Pho.get('handover') + '/' + file_info.file_path
+            with open(src, 'wb') as new_file:
+                new_file.write(downloaded_file)
+        else:
+            pass
+#Костыль на распознование пользователя
+        if message.chat.username == "Emin_Pho" : user = user_config.Emin_Pho
+        elif message.chat.username == "nelly_white" : user = user_config.nelly_white
+        elif message.chat.username == "AnyaDD" : user = user_config.AnyaDD
+        elif message.chat.username == "heytanne" : user = user_config.heytanne
+        elif message.chat.username == "Kamila_Usmanova" : user = user_config.Kamila_Usmanova
+        elif message.chat.username == "lowely_pony" : user = user_config.lowely_pony
+        elif message.chat.username == "Mr_Moony007" : user = user_config.Mr_Moony007
+        elif message.chat.username == "Nikpleskach" : user = user_config.Nikpleskach
+        elif message.chat.username == "yannnut" : user = user_config.yannnut
+        if user.get('handover_hw') == True:
+            user.update({'handover_hw': False})
+            bot.send_message(message.chat.id, "Домашнее задание принято на проверку!")
+        elif user.get ('handover_cw') == True:
+            user.update({'handover_cw': False})
+            bot.send_message(message.chat.id, "Креативное задание принято на проверку!")
+        else:
+            pass
     except Exception as warring:
         bot.send_message(517561825, warring)
     else:
-        if message.chat.username == "Emin_Pho":
-            if user_config.Emin_Pho.get ('handover_hw') == True:
-                user_config.Emin_Pho.update({'handover_hw': False})
-                bot.send_message(message.chat.id, "Домашняя работа принято на проверку!")
-            elif user_config.Emin_Pho.get ('handover_cw') == True:
-                user_config.Emin_Pho.update({'handover_cw': False})
-                bot.send_message(message.chat.id, "Креативное задание принято на проверку!")
-            else:
-                pass
-        if message.chat.username == "nelly_white":
-            if user_config.nelly_white.get ('handover_hw') == True:
-                user_config.nelly_white.update({'handover_hw': False})
-                bot.send_message(message.chat.id, "Домашняя работа принято на проверку!")
-            elif user_config.nelly_white.get ('handover_cw') == True:
-                user_config.nelly_white.update({'handover_cw': False})
-                bot.send_message(message.chat.id, "Креативное задание принято на проверку!")
-            else:
-                pass
-        if message.chat.username == "AnyaDD":
-            if user_config.AnyaDD.get ('handover_hw') == True:
-                user_config.AnyaDD.update({'handover_hw': False})
-                bot.send_message(message.chat.id, "Домашняя работа принято на проверку!")
-            elif user_config.AnyaDD.get ('handover_cw') == True:
-                user_config.AnyaDD.update({'handover_cw': False})
-                bot.send_message(message.chat.id, "Креативное задание принято на проверку!")
-            else:
-                pass
-        if message.chat.username == "heytanne":
-            if user_config.heytanne.get ('handover_hw') == True:
-                user_config.heytanne.update({'handover_hw': False})
-                bot.send_message(message.chat.id, "Домашняя работа принято на проверку!")
-            elif user_config.heytanne.get ('handover_cw') == True:
-                user_config.heytanne.update({'handover_cw': False})
-                bot.send_message(message.chat.id, "Креативное задание принято на проверку!")
-            else:
-                pass
-        if message.chat.username == "Kamila_Usmanova":
-            if user_config.Kamila_Usmanova.get ('handover_hw') == True:
-                user_config.Kamila_Usmanova.update({'handover_hw': False})
-                bot.send_message(message.chat.id, "Домашняя работа принято на проверку!")
-            elif user_config.Kamila_Usmanova.get ('handover_cw') == True:
-                user_config.Kamila_Usmanova.update({'handover_cw': False})
-                bot.send_message(message.chat.id, "Креативное задание принято на проверку!")
-            else:
-                pass
-        if message.chat.username == "lowely_pony":
-            if user_config.lowely_pony.get ('handover_hw') == True:
-                user_config.lowely_pony.update({'handover_hw': False})
-                bot.send_message(message.chat.id, "Домашняя работа принято на проверку!")
-            elif user_config.lowely_pony.get ('handover_cw') == True:
-                user_config.lowely_pony.update({'handover_cw': False})
-                bot.send_message(message.chat.id, "Креативное задание принято на проверку!")
-            else:
-                pass
-        if message.chat.username == "Mr_Moony007":
-            if user_config.Mr_Moony007.get ('handover_hw') == True:
-                user_config.Mr_Moony007.update({'handover_hw': False})
-                bot.send_message(message.chat.id, "Домашняя работа принято на проверку!")
-            elif user_config.Mr_Moony007.get ('handover_cw') == True:
-                user_config.Mr_Moony007.update({'handover_cw': False})
-                bot.send_message(message.chat.id, "Креативное задание принято на проверку!")
-            else:
-                pass
-        if message.chat.username == "Nikpleskach":
-            if user_config.Nikpleskach.get ('handover_hw') == True:
-                user_config.Nikpleskach.update({'handover_hw': False})
-                bot.send_message(message.chat.id, "Домашняя работа принято на проверку!")
-            elif user_config.Nikpleskach.get ('handover_cw') == True:
-                user_config.Nikpleskach.update({'handover_cw': False})
-                bot.send_message(message.chat.id, "Креативное задание принято на проверку!")
-            else:
-                pass
-        if message.chat.username == "yannnut":
-            if user_config.yannnut.get ('handover_hw') == True:
-                user_config.yannnut.update({'handover_hw': False})
-                bot.send_message(message.chat.id, "Домашняя работа принято на проверку!")
-            elif user_config.yannnut.get ('handover_cw') == True:
-                user_config.yannnut.update({'handover_cw': False})
-                bot.send_message(message.chat.id, "Креативное задание принято на проверку!")
-            else:
-                pass
         bot.send_message(517561825, message.chat.username + ' загрузил файлы')
         bot.send_message(392874912, message.chat.username + ' загрузил файлы')
     finally:
@@ -181,25 +120,6 @@ def handler_file(message):
 @bot.message_handler(content_types=["text"])
 def handler_text(message):
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
  # Костыль на обновление
     db = sqlite3.connect('nelly_v-ass.db')
     cursor = db.cursor()
@@ -208,10 +128,10 @@ def handler_text(message):
 
 
     if message.text == '🗓 Расписание':
-        bot.send_message(message.chat.id, content.schedule)
+        bot.send_message(message.chat.id, content.datatable)
     elif message.text == '📜 Информация':
         bot.send_message(message.chat.id, content.melted)
-        file_description = open(config.info, 'rb')
+        file_description = open(content.info, 'rb')
         bot.send_document(message.chat.id, file_description)
     elif message.text == '⚙️ Связь':
         bot.send_message(message.chat.id, "Если есть вопросы, пиши @nelly_white")
@@ -224,6 +144,15 @@ def handler_text(message):
     elif message.text in ('🎁',):
         bot.send_message(message.chat.id, content.the_end)
     elif message.text in ('📌 1', '📌 2', '📌 3', '📌 4', '📌 5', '📌 6', '📌 7', '📌 8'): # вызов любого урока
+
+
+
+
+
+
+
+
+
 
         # костыльный блок, рефакторинг
         if message.text == '📌 1': lesson = content.lesson_1.get
@@ -240,6 +169,10 @@ def handler_text(message):
 
 
 
+
+
+
+
         if lesson ('access') == 0: # Урок закрыт
             markup_timetable = types.InlineKeyboardMarkup()
             button_timetable = types.InlineKeyboardButton("Мое расписание", callback_data='timetable')
@@ -248,25 +181,54 @@ def handler_text(message):
 
         elif lesson ('access') == 1: # Урок ожидается
             markup_future_lessons = types.InlineKeyboardMarkup()
-            button__future_lessons = types.InlineKeyboardButton("Урок пройдет 05.08 в Zoom", url=config.url_zoom)
+            button__future_lessons = types.InlineKeyboardButton("Урок пройдет 05.08 в Zoom", url=content.url_zoom)
             markup_future_lessons.row(button__future_lessons)
             bot.send_message(message.chat.id, content.lesson_1.get('topic'), reply_markup=markup_future_lessons)
 
         elif lesson ('access') == 2: # Урок прошел
-            markup_lessons=types.InlineKeyboardMarkup()
-            les1_url = types.InlineKeyboardButton("Скачать Урок", url=content.lesson_1.get('url_lesson')) #Текст, ссылка на фаил и форма отправки
-            les1_hq = types.InlineKeyboardButton("Скачать ДЗ", callback_data='les1_hq') #Текст, ссылка на фаил и форма отправки
-            les1_cq = types.InlineKeyboardButton("Скачать КДЗ", callback_data='les1_cq') #Текст, ссылка на фаил и форма отправки
-            les1_t = types.InlineKeyboardButton("Пройти Тест (Google Forms)", url='https://forms.gle/tdGSpsLBXyUY5oddA')
-            les1_hw = types.InlineKeyboardButton("Сдать ДЗ/КЗ", callback_data='les1_hw')
-            markup_lessons.row(les1_url)
-            markup_lessons.row(les1_hq, les1_cq, les1_t)
-            markup_lessons.row(les1_hw)
+            if message.text == '📌 1':
+                markup_lessons=types.InlineKeyboardMarkup()
+                les1_url = types.InlineKeyboardButton("Смотреть урок", url=content.lesson_1.get('url_lesson')) #Текст, ссылка на фаил и форма отправки
+                les1_t = types.InlineKeyboardButton("Пройти Тест", url=content.lesson_1.get('test'))
+                les1_conspect = types.InlineKeyboardButton("Открыть конспект", callback_data='les1_conspect') #Текст, ссылка на фаил и форма отправки
+                les1_hq = types.InlineKeyboardButton("Открыть ДЗ", callback_data='les1_hq') #Текст, ссылка на фаил и форма отправки
+                les1_cq = types.InlineKeyboardButton("Открыть КДЗ", callback_data='les1_cq') #Текст, ссылка на фаил и форма отправки
+                les1_hw = types.InlineKeyboardButton("Сдать ДЗ/КЗ", callback_data='les1_hw')
+                markup_lessons.row(les1_url, les1_conspect)
+                markup_lessons.row(les1_hq, les1_cq, les1_t)
+                markup_lessons.row(les1_hw)
+                bot.send_message(message.chat.id, lesson('topic'), reply_markup=markup_lessons)
+            elif message.text == '📌 2':
+                markup_lessons=types.InlineKeyboardMarkup()
+                les1_url = types.InlineKeyboardButton("Смотреть урок", url=content.lesson_2.get('url_lesson')) #Текст, ссылка на фаил и форма отправки
+                les1_t = types.InlineKeyboardButton("Пройти Тест", url=content.lesson_2.get('test'))
+                les1_conspect = types.InlineKeyboardButton("Открыть конспект", callback_data='les2_conspect') #Текст, ссылка на фаил и форма отправки
+                les1_hq = types.InlineKeyboardButton("Открыть ДЗ", callback_data='les2_hq') #Текст, ссылка на фаил и форма отправки
+                les1_cq = types.InlineKeyboardButton("Открыть КДЗ", callback_data='les2_cq') #Текст, ссылка на фаил и форма отправки
+                les1_hw = types.InlineKeyboardButton("Сдать ДЗ/КЗ", callback_data='les2_hw')
+                markup_lessons.row(les1_url, les1_conspect)
+                markup_lessons.row(les1_hq, les1_cq, les1_t)
+                markup_lessons.row(les1_hw)
+                bot.send_message(message.chat.id, lesson('topic'), reply_markup=markup_lessons)
 
-            bot.send_message(message.chat.id, content.lesson_1.get('topic'), reply_markup=markup_lessons)
+
+
+
+
 
         else: # Обработка исключений
             pass
+
+
+
+
+
+
+
+
+
+
+
     else:
         db = sqlite3.connect('nelly_v-ass.db')
         cursor = db.cursor()
@@ -284,8 +246,35 @@ def handler_text(message):
 @bot.callback_query_handler(func=lambda call: True)
 def commands (call):
 
+
     if call.data == 'timetable':
-        bot.send_message(call.message.chat.id, content.schedule)
+        bot.send_message(call.message.chat.id, content.datatable)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     elif call.data == 'les1_hw': # Обработчик ДЗ|КДЗ
         markup_handover = types.InlineKeyboardMarkup()
@@ -293,13 +282,19 @@ def commands (call):
         button_handover_cw = types.InlineKeyboardButton("Креативное задание", callback_data='button_handover_cw')
         markup_handover.row(button_handover_hw, button_handover_cw)
         bot.send_message(call.message.chat.id, "Урок 1. Какое задание ты хочешь сдать?", reply_markup=markup_handover)
+    elif call.data == 'les2_hw': # Обработчик ДЗ|КДЗ
+        markup_handover = types.InlineKeyboardMarkup()
+        button_handover_hw = types.InlineKeyboardButton("Домашнее задание", callback_data='button_handover_hw2')
+        button_handover_cw = types.InlineKeyboardButton("Креативное задание", callback_data='button_handover_cw2')
+        markup_handover.row(button_handover_hw, button_handover_cw)
+        bot.send_message(call.message.chat.id, "Урок 1. Какое задание ты хочешь сдать?", reply_markup=markup_handover)
+
     elif call.data == 'button_handover_hw':
         if user_config.Emin_Pho.get('handover_hw') == True:
             bot.send_message(call.message.chat.id, "Пришли фото в чат, (прикрепить => фото или видео => быстрая отправка).")
             user_config.Emin_Pho.update({'handover': 'homework'})
         else:
             bot.send_message(call.message.chat.id, "Работа на проверке!")
-
     elif call.data == 'button_handover_cw':
         if user_config.Emin_Pho.get('handover_cw') == True:
             bot.send_message(call.message.chat.id, "Пришли фото в чат, (прикрепить => фото или видео => быстрая отправка).")
@@ -307,21 +302,69 @@ def commands (call):
         else:
             bot.send_message(call.message.chat.id, "Работа на проверке!")
 
-# при отправке файла    такжепринимать документы    добавить пользователей
-# что то в админке и перепроверка    и обновления
+    elif call.data == 'button_handover_hw2':
+        if user_config.Emin_Pho.get('handover_hw') == True:
+            bot.send_message(call.message.chat.id, "Пришли фото в чат, (прикрепить => фото или видео => быстрая отправка).")
+            user_config.Emin_Pho.update({'handover': 'homework'})
+        else:
+            bot.send_message(call.message.chat.id, "Работа на проверке!")
+    elif call.data == 'button_handover_cw2':
+        if user_config.Emin_Pho.get('handover_cw') == True:
+            bot.send_message(call.message.chat.id, "Пришли фото в чат, (прикрепить => фото или видео => быстрая отправка).")
+            user_config.Emin_Pho.update({'handover': 'creativework'})
+        else:
+            bot.send_message(call.message.chat.id, "Работа на проверке!")
 
 
-    elif call.data == 'les1_les':
-        file_homeches = open(content.lesson_1.get ('lesson'), 'rb')
+
+
+
+
+
+
+    elif call.data == 'les1_conspect':
+        file_homeches = open(content.lesson_1.get('lesson'), 'rb')
         bot.send_document(call.message.chat.id, file_homeches)
-
     elif call.data == 'les1_hq': # Текст, фаил и возможность сдать дз (КАК будет пересдача?)
-        file_homeches = open(content.lesson_1.get ('homework'), 'rb')
+        file_homeches = open(content.lesson_1.get('homework'), 'rb')
+        bot.send_document(call.message.chat.id, file_homeches)
+    elif call.data == 'les1_cq': # ()
+        file_homeches = open(content.lesson_1.get('create_work'), 'rb')
         bot.send_document(call.message.chat.id, file_homeches)
 
-    elif call.data == 'les1_cq': # ()
-        file_homeches = open(content.lesson_1.get ('create_work'), 'rb')
+    elif call.data == 'les2_conspect':
+        file_homeches = open(content.lesson_2.get('lesson'), 'rb')
         bot.send_document(call.message.chat.id, file_homeches)
+    elif call.data == 'les2_hq': # Текст, фаил и возможность сдать дз (КАК будет пересдача?)
+        file_homeches = open(content.lesson_2.get('homework'), 'rb')
+        bot.send_document(call.message.chat.id, file_homeches)
+    elif call.data == 'les2_cq': # ()
+        file_homeches = open(content.lesson_2.get('create_work'), 'rb')
+        bot.send_document(call.message.chat.id, file_homeches)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     elif call.data == 'admin_message': # Отправка сообщения в бот
         admin_markup_mail = types.InlineKeyboardMarkup()
@@ -336,14 +379,69 @@ def commands (call):
         for i in user_pull:
             bot.send_message(i, content.admin_sent_message)
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     elif call.data == 'admin_users': # Просмотр всех пользователей
         db = sqlite3.connect('nelly_v-ass.db')
         cursor = db.cursor()
-        cursor.execute('SELECT * FROM user')
+        cursor.execute('SELECT login FROM user')
         admin_access = cursor.fetchall()
         access = cursor.fetchone()
         db.commit()
-        bot.send_message(call.message.chat.id, '\n'.join(map(str, admin_access)))
+
+        admin_markup_mail = types.InlineKeyboardMarkup()
+        for i in range(len(admin_access)):
+            name = str(admin_access[i][0])
+            admin_access[i] = types.InlineKeyboardButton(name, callback_data=str(admin_access[i]))
+            admin_markup_mail.row(admin_access[i])
+        bot.send_message(call.message.chat.id, "Список пользователей", reply_markup = admin_markup_mail)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     else:
         bot.send_message(call.message.chat.id, text='Ошибка 101. Напиши @Emin_Pho.')
 

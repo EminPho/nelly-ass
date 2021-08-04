@@ -1,5 +1,14 @@
 # -*- coding: utf-8 -*-
 
+#/Users/imeva/Documents/GitHub/nelly-ass/
+
+
+
+info = 'lessons/info.pdf'
+sticker_funny = 'stickers/funny.webp'
+url_zoom = "https://us04web.zoom.us/j/3064665128?pwd=bTY1SDhpTkZMcC9KQXNEcXVYeDJTQT09"
+
+
 hello ='''
 Привет!)
 
@@ -13,7 +22,7 @@ hello ='''
 
 
 
-schedule = '''
+datatable = '''
 📌 02.08.21 — УРОК 1. Введение. Основные правила мобильной фотографии.
 📌 05.08.21 — УРОК 2. Типы фото: портреты и позирование, раскладки, текстуры, детали, пейзажи.
 📌 09.08.21 — УРОК 3. Цветовые сочетания.
@@ -57,8 +66,6 @@ melted ='''
 старательного студента в конце курса ждет подарок!
 '''
 
-
-
 the_end = '''
 ПОДВЕДЕНИЕ ИТОГОВ:
 — посмотрим, к каким результатам мы пришли;
@@ -73,7 +80,6 @@ AllBot_Test_Message
 
 lesson_1 = {
 'access' : 2,
-'date' : 1627934400, # 02.08.2021 20:00
 'topic' : 'Введение. Основные правила мобильной фотографии.',
 'lesson' : 'lessons/Lesson_1.pdf',
 'homework' : 'lessons/Homework_1.pdf',
@@ -84,20 +90,20 @@ lesson_1 = {
 
 lesson_2 = {
 "access" : 1,
-'date' : 1627934400, # 02.08.2021 20:00
 'topic' : 'Типы фото: портреты и позирование, раскладки, текстуры, детали, пейзажи.',
-'lesson' : '/Users/imeva/Documents/nelly-ass/lessons/Lesson_2.pdf',
-'homework' : '/Users/imeva/Documents/nelly-ass/lessons/Homework_2.pdf',
-'create_work' : '/Users/imeva/Documents/nelly-ass/lessons/Creative_HW_2.pdf',
-'test' : 'https://docs.google.com/forms/d/17WVgoQ3sk8SL67BmTy81clLVG_urIIXJRiyKhBaYdX8/edit',
+'lesson' : 'lessons/Lesson_2.pdf',
+'homework' : 'lessons/Homework_2.pdf',
+'create_work' : 'lessons/Creative_HW_2.pdf',
+'test' : 'https://forms.gle/tdGSpsLBXyUY5oddA',
+'url_lesson' : 'https://drive.google.com/file/d/1FQ2bqNLILGYELzZr4QSNWfe2uBXEnNnU/view?usp=drivesdk',
 }
 
 lesson_3 = {
 "access" : 0,
-'date' : 1627934400, # 02.08.2021 20:00
 'topic' : 'Цветовые сочетания.',
-'lesson' : '/Users/imeva/Documents/nelly-ass/lessons/Lesson_3.pdf',
-'homework' : '/Users/imeva/Documents/nelly-ass/lessons/Homework_3.pdf',
-'create_work' : '/Users/imeva/Documents/nelly-ass/lessons/Creative_HW_3.pdf',
-'test' : 'https://docs.google.com/forms/d/1PTirnUe5nkDPPEiDjdqPnBCqPmXs4EEAB47GpBWsVNw/edit',
+'lesson' : 'lessons/Lesson_2.pdf',
+'homework' : 'lessons/Homework_2.pdf',
+'create_work' : 'lessons/Creative_HW_2.pdf',
+'test' : 'https://forms.gle/tdGSpsLBXyUY5oddA',
+'url_lesson' : 'https://drive.google.com/file/d/1FQ2bqNLILGYELzZr4QSNWfe2uBXEnNnU/view?usp=drivesdk',
 }
