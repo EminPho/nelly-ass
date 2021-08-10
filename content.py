@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 
-#/Users/imeva/Documents/GitHub/nelly-ass/
+folder = '/Users/imeva/Documents/GitHub/nelly-ass/'
 
 
-
-info = 'lessons/info.pdf'
-sticker_funny = 'stickers/funny.webp'
+info = folder + 'lessons/info.pdf'
+sticker_funny = folder + 'stickers/funny.webp'
+date_zoom = 'Урок пройдет 12.08 в Zoom'
 url_zoom = "https://us04web.zoom.us/j/3064665128?pwd=bTY1SDhpTkZMcC9KQXNEcXVYeDJTQT09"
 
 
@@ -73,37 +73,77 @@ the_end = '''
 — узнаем, кто набрал максимум баллов и выиграл подарок ♥️
 '''
 
-admin_sent_message = '''
-AllBot_Test_Message
-'''
-
-
 lesson_1 = {
 'access' : 2,
 'topic' : 'Введение. Основные правила мобильной фотографии.',
-'lesson' : 'lessons/Lesson_1.pdf',
-'homework' : 'lessons/Homework_1.pdf',
-'create_work' : 'lessons/Creative_HW_1.pdf',
+'lesson' : folder + 'lessons/Lesson_1.pdf',
+'homework' : folder + 'lessons/Homework_1.pdf',
+'create_work' : folder + 'lessons/Creative_HW_1.pdf',
 'test' : 'https://docs.google.com/forms/d/1Lzjr-t3qtP6MzCpxaFpqGNLbo_3IFB1Oo9JPeezy6Pk/edit',
 'url_lesson' : 'https://drive.google.com/file/d/1FQ2bqNLILGYELzZr4QSNWfe2uBXEnNnU/view?usp=drivesdk',
 }
 
 lesson_2 = {
-"access" : 1,
+"access" : 2,
 'topic' : 'Типы фото: портреты и позирование, раскладки, текстуры, детали, пейзажи.',
-'lesson' : 'lessons/Lesson_2.pdf',
-'homework' : 'lessons/Homework_2.pdf',
-'create_work' : 'lessons/Creative_HW_2.pdf',
-'test' : 'https://forms.gle/tdGSpsLBXyUY5oddA',
-'url_lesson' : 'https://drive.google.com/file/d/1FQ2bqNLILGYELzZr4QSNWfe2uBXEnNnU/view?usp=drivesdk',
+'lesson' : folder + 'lessons/Lesson_2.pdf',
+'homework' : folder + 'lessons/Homework_2.pdf',
+'create_work' : folder + 'lessons/Creative_HW_2.pdf',
+'test' : 'https://docs.google.com/forms/d/17WVgoQ3sk8SL67BmTy81clLVG_urIIXJRiyKhBaYdX8/edit',
+'url_lesson' : 'https://drive.google.com/file/d/1bl9lX1vWNeoP-Z7z_vg7gii_-WidvXG1/view?usp=sharing',
 }
 
 lesson_3 = {
+"access" : 2,
+'topic' : 'Цветовые сочетания',
+'lesson' : folder + 'lessons/Lesson_3.pdf',
+'homework' : folder + 'lessons/Homework_3.pdf',
+'create_work' : folder + 'lessons/Creative_HW_3.pdf',
+'test' : 'https://docs.google.com/forms/d/1PTirnUe5nkDPPEiDjdqPnBCqPmXs4EEAB47GpBWsVNw/edit',
+'url_lesson' : 'https://drive.google.com/file/d/1x-p2DoOkQ4-l3eyePmMdH3T90OJnL-Fb/view?usp=sharing',
+}
+lesson_4 = {
+"access" : 1,
+'topic' : 'Черновая обработка.',
+'lesson' : folder + 'lessons/Lesson_4.pdf',
+'homework' : folder + 'lessons/Homework_4.pdf',
+'create_work' : folder + 'lessons/Creative_HW_4.pdf',
+'test' : 'https://docs.google.com',
+'url_lesson' : 'https://drive.google.com',
+}
+lesson_5 = {
 "access" : 0,
-'topic' : 'Цветовые сочетания.',
-'lesson' : 'lessons/Lesson_2.pdf',
-'homework' : 'lessons/Homework_2.pdf',
-'create_work' : 'lessons/Creative_HW_2.pdf',
-'test' : 'https://forms.gle/tdGSpsLBXyUY5oddA',
-'url_lesson' : 'https://drive.google.com/file/d/1FQ2bqNLILGYELzZr4QSNWfe2uBXEnNnU/view?usp=drivesdk',
+'topic' : 'Чистовая обработка.',
+'lesson' : folder + 'lessons/Lesson_5.pdf',
+'homework' : folder + 'lessons/Homework_5.pdf',
+'create_work' : folder + 'lessons/Creative_HW_5.pdf',
+'test' : 'https://docs.google.com',
+'url_lesson' : 'https://drive.google.com',
+}
+lesson_6 = {
+"access" : 0,
+'topic' : 'Бриф и ТЗ. Вайб и ассоциации. Составление мудборда.',
+'lesson' : folder + 'lessons/Lesson_6.pdf',
+'homework' : folder + 'lessons/Homework_6.pdf',
+'create_work' : folder + 'lessons/Creative_HW_6.pdf',
+'test' : 'https://docs.google.com',
+'url_lesson' : 'https://drive.google.com',
+}
+lesson_7 = {
+"access" : 0,
+'topic' : 'Концепция. Выбор фото. Правила составления ленты.',
+'lesson' : folder + 'lessons/Lesson_7.pdf',
+'homework' : folder + 'lessons/Homework_7.pdf',
+'create_work' : folder + 'lessons/Creative_HW_7.pdf',
+'test' : 'https://docs.google.com',
+'url_lesson' : 'https://drive.google.com',
+}
+lesson_8 = {
+"access" : 0,
+'topic' : 'Подбор референсов. Одежда и локация.',
+'lesson' : folder + 'lessons/Lesson_8.pdf',
+'homework' : folder + 'lessons/Homework_8.pdf',
+'create_work' : folder + 'lessons/Creative_HW_8.pdf',
+'test' : 'https://docs.google.com',
+'url_lesson' : 'https://drive.google.com',
 }
