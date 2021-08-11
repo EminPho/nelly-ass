@@ -124,65 +124,12 @@ def handler_text(message):
         elif message.text == '⚙️ Связь':
             help (message)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         elif message.text == '📚 Статистика':
-
             score = eval('user_config.' + message.chat.username + '.get')
-
             text = "Баллы: {}\nМесто в общем рейтинге: {}\nМаксимальный балл на курсе: {}\n\nПринято ДЗ: {}\nПринято КЗ: {}\nПринято тестов: {}\n".format(score('point'), user_config.score.get(str(message.chat.username)), user_config.score.get('max_point'), score('homework_done'), score('creativework_done'), score('test_done'))
             bot.send_message(message.chat.id, text)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         elif message.text == '📖 Отзывы':
             bot.send_message(message.chat.id, content.feedback)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            pass
         elif message.text in ('🔒 1', '🔒 2', '🔒 3', '🔒 4', '🔒 5', '🔒 6', '🔒 7', '🔒 8'):
             bot.send_message(message.chat.id, 'Сначала пройти предыдущий урок!')
         elif message.text in ('🎁',):
