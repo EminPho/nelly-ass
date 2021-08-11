@@ -14,7 +14,7 @@ bot = telebot.TeleBot(config.token_test)
 #FUNCTION ZONE
 
 def help (message):
-    bot.send_message(message.chat.id, 'В разработке. Плановая реализация в Version Betta')
+    bot.send_message(message.chat.id, content.help)
 
 def main_markup (message):
     main_markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
@@ -115,7 +115,6 @@ def handler_file(message):
 @bot.message_handler(content_types=["text"])
 def handler_text(message):
     try:
-        main_markup (message)
         if message.text == '🗓 Расписание':
             bot.send_message(message.chat.id, content.datatable)
         elif message.text == '📜 Информация':
@@ -124,12 +123,68 @@ def handler_text(message):
             bot.send_document(message.chat.id, file_description)
         elif message.text == '⚙️ Связь':
             help (message)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         elif message.text == '📚 Статистика':
-            pass
+
+            score = eval('user_config.' + message.chat.username + '.get')
+
+            text = "Баллы: {}\nМесто в общем рейтинге: {}\nМаксимальный балл на курсе: {}\n\nПринято ДЗ: {}\nПринято КЗ: {}\nПринято тестов: {}\n".format(score('point'), user_config.score.get(str(message.chat.username)), user_config.score.get('max_point'), score('homework_done'), score('creativework_done'), score('test_done'))
+            bot.send_message(message.chat.id, text)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         elif message.text == '📖 Отзывы':
+            bot.send_message(message.chat.id, content.feedback)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             pass
         elif message.text in ('🔒 1', '🔒 2', '🔒 3', '🔒 4', '🔒 5', '🔒 6', '🔒 7', '🔒 8'):
-            bot.send_message(message.chat.id, 'Сначала пройти предыдущий урок!', reply_markup = main_markup)
+            bot.send_message(message.chat.id, 'Сначала пройти предыдущий урок!')
         elif message.text in ('🎁',):
             bot.send_message(message.chat.id, content.the_end)
         elif message.text in ('📌 1', '📌 2', '📌 3', '📌 4', '📌 5', '📌 6', '📌 7', '📌 8'): # вызов любого урока
@@ -145,12 +200,14 @@ def handler_text(message):
                 markup_timetable = types.InlineKeyboardMarkup()
                 button_timetable = types.InlineKeyboardButton("Мое расписание", callback_data='timetable')
                 markup_timetable.row(button_timetable)
+                bot.send_message(message.chat.id, 'Сначала пройти предыдущий урок!')
             elif lesson ('access') == 1: # Урок ожидается
                 markup_future_lessons = types.InlineKeyboardMarkup()
                 button__future_lessons = types.InlineKeyboardButton(content.date_zoom, url=content.url_zoom)
                 markup_future_lessons.row(button__future_lessons)
-                bot.send_message(message.chat.id, lesson.get('topic'), reply_markup=markup_future_lessons)
+                bot.send_message(message.chat.id, lesson('topic'), reply_markup=markup_future_lessons)
             elif lesson ('access') == 2: # Урок прошел
+                main_markup(message)
                 markup_lessons=types.InlineKeyboardMarkup()
                 url_lesson = types.InlineKeyboardButton("Смотреть урок", url=lesson('url_lesson')) #Текст, ссылка на фаил и форма отправки
                 test = types.InlineKeyboardButton("Пройти Тест", url=lesson('test'))
@@ -172,7 +229,7 @@ def handler_text(message):
                 content.admin_sent_message = message.text
                 bot.send_message(message.chat.id, '...сообщение записанно...')
     except Exception as warring:
-        bot.send_message(517561825, message.chat.username + ' call EXCEPT handler_warring: ' + str(warring))
+        bot.send_message(517561825, message.chat.username + ' call EXCEPT handler_text: ' + str(warring))
     else:
         pass
     finally:
@@ -328,7 +385,7 @@ def handler_warring(message):
     else:
         pass
     finally:
-        bot.send_message(517561825, message.chat.username + ' calling: ' + message)
+        bot.send_message(517561825, message.chat.username + ' calling: ' + str(message))
 
 
 
