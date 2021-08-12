@@ -1,14 +1,15 @@
 # -*- coding: utf-8 -*-
 
-folder = '/Users/imeva/Documents/GitHub/nelly-ass/'
+#/Users/imeva/Documents/GitHub/nelly-ass/
+folder = ''
 
 
 info = folder + 'lessons/info.pdf'
 sticker_funny = folder + 'stickers/funny.webp'
-date_zoom = 'Урок пройдет 12.08 в Zoom'
+date_zoom = 'Урок пройдет 16.08 в Zoom'
 url_zoom = "https://us04web.zoom.us/j/3064665128?pwd=bTY1SDhpTkZMcC9KQXNEcXVYeDJTQT09"
 
-
+admin_sent_message = "admin_sent_message"
 
 hello ='''
 Привет!)
@@ -22,7 +23,7 @@ hello ='''
 '''
 
 feedback ='''
-Вы можете отставить отзыв @nelly_white и она обязательно окажется тут!
+Вы можете отставить отзыв @nelly_white и он обязательно окажется тут!
 '''
 
 help ='''
@@ -114,16 +115,16 @@ lesson_3 = {
 'url_lesson' : 'https://drive.google.com/file/d/1x-p2DoOkQ4-l3eyePmMdH3T90OJnL-Fb/view?usp=sharing',
 }
 lesson_4 = {
-"access" : 1,
+"access" : 2,
 'topic' : 'Черновая обработка.',
 'lesson' : folder + 'lessons/Lesson_4.pdf',
 'homework' : folder + 'lessons/Homework_4.pdf',
 'create_work' : folder + 'lessons/Creative_HW_4.pdf',
-'test' : 'https://docs.google.com',
-'url_lesson' : 'https://drive.google.com',
+'test' : 'https://docs.google.com/forms/d/1Hh6_KDoyV5pocIN5thf_kW7ted4fy5fb8uImyYJjhcw/edit',
+'url_lesson' : 'https://drive.google.com/file/d/1hTInYlGyln5_FXJZ0lYUFyJQpG6Kuksg/view?usp=drivesdk',
 }
 lesson_5 = {
-"access" : 0,
+"access" : 1,
 'topic' : 'Чистовая обработка.',
 'lesson' : folder + 'lessons/Lesson_5.pdf',
 'homework' : folder + 'lessons/Homework_5.pdf',

@@ -9,7 +9,7 @@ import sqlite3
 import telebot
 from telebot import types
 
-bot = telebot.TeleBot(config.token_test)
+bot = telebot.TeleBot(config.token_main)
 
 #FUNCTION ZONE
 
@@ -25,7 +25,7 @@ def main_markup (message):
     but22 = types.KeyboardButton("📌 2")
     but23 = types.KeyboardButton("📌 3")
     but24 = types.KeyboardButton("📌 4")
-    but25 = types.KeyboardButton("🔒 5")
+    but25 = types.KeyboardButton("📌 5")
     but26 = types.KeyboardButton("🔒 6")
     but27 = types.KeyboardButton("🔒 7")
     but28 = types.KeyboardButton("🔒 8")
@@ -91,13 +91,13 @@ def handler_file(message):
         if message.content_type == 'photo':
             file_info = bot.get_file(message.photo[len(message.photo) - 1].file_id)
             downloaded_file = bot.download_file(file_info.file_path)
-            src =   user_config.hand_over.get('folder') + message.chat.username +'/lesson_3/' + user_config.hand_over.get('handover') + '/'+ file_info.file_path
+            src =   user_config.hand_over.get('folder') + message.chat.username +'/lesson_'+user_config.Emin_Pho.get('log')+'/' + user_config.hand_over.get('handover') + '/'+ file_info.file_path
             with open(src, 'wb') as new_file:
                 new_file.write(downloaded_file)
         elif message.content_type == 'document':
             file_info = bot.get_file(message.document.file_id)
             downloaded_file = bot.download_file(file_info.file_path)
-            src =  user_config.hand_over.get('folder') + message.chat.username + '/lesson_3/' + user_config.hand_over.get('handover') + '/' + file_info.file_path
+            src =  user_config.hand_over.get('folder') + message.chat.username + '/lesson_'+user_config.Emin_Pho.get('log')+'/' + user_config.hand_over.get('handover') + '/' + file_info.file_path
             with open(src, 'wb') as new_file:
                 new_file.write(downloaded_file)
         else:
@@ -123,10 +123,9 @@ def handler_text(message):
             bot.send_document(message.chat.id, file_description)
         elif message.text == '⚙️ Связь':
             help (message)
-
         elif message.text == '📚 Статистика':
-            score = eval('user_config.' + message.chat.username + '.get')
-            text = "Баллы: {}\nМесто в общем рейтинге: {}\nМаксимальный балл на курсе: {}\n\nПринято ДЗ: {}\nПринято КЗ: {}\nПринято тестов: {}\n".format(score('point'), user_config.score.get(str(message.chat.username)), user_config.score.get('max_point'), score('homework_done'), score('creativework_done'), score('test_done'))
+            store = user_config.score.get(str(message.chat.username))
+            text = "Баллы: {}\nМесто в общем рейтинге: {}\nМаксимальный балл на курсе: {}\n\nПринято ДЗ: {}\nПринято КЗ: {}\nПринято тестов: {}\n".format(store.get('point'),store.get('place'),user_config.hand_over.get('max_point'),store.get('homework_done'),store.get('creativework_done'),store.get('test_done'))
             bot.send_message(message.chat.id, text)
         elif message.text == '📖 Отзывы':
             bot.send_message(message.chat.id, content.feedback)
@@ -143,6 +142,18 @@ def handler_text(message):
             if message.text == '📌 6': lesson = content.lesson_6.get
             if message.text == '📌 7': lesson = content.lesson_7.get
             if message.text == '📌 8': lesson = content.lesson_8.get
+
+
+
+
+            log = eval("user_config." + message.chat.username)
+            log.update({'log': str(message.text[2])})
+
+
+
+
+
+
             if lesson ('access') == 0: # Урок закрыт
                 markup_timetable = types.InlineKeyboardMarkup()
                 button_timetable = types.InlineKeyboardButton("Мое расписание", callback_data='timetable')
@@ -274,7 +285,7 @@ def handler_call (call):
             ho_les6 = types.InlineKeyboardButton("Урок 6", callback_data='ho_les6')
             ho_les7 = types.InlineKeyboardButton("Урок 7", callback_data='ho_les7')
             ho_les8 = types.InlineKeyboardButton("Урок 8", callback_data='ho_les8')
-            static = types.InlineKeyboardButton("Рейтинг", callback_data='static')
+            static = types.InlineKeyboardButton("Рейтинг", callback_data='static' + str(call.data))
             user_account.row(ho_les1, ho_les2, ho_les3, ho_les4)
             user_account.row(ho_les5, ho_les6, ho_les7, ho_les8)
             user_account.row(static)
@@ -308,6 +319,39 @@ def handler_call (call):
                     photo = open(part+i, 'rb')
                     bot.send_photo(call.message.chat.id, photo)
             bot.send_message(call.message.chat.id, 'ДЗ больше нет')
+
+
+
+
+
+
+
+
+        elif call.data[:6] == 'static':
+            x = 1
+
+            while x <= 9 :
+                for i in user_config.score:
+                    user = user_config.score.get(str(i))
+                    if user.get('place') == x:
+                        bot.send_message(call.message.chat.id,  str(user.get('place')) + ' | ' + str(i) + ' : ' + str(user.get('point')) + ' points')
+                x = x + 1
+            bot.send_message(call.message.chat.id, 'Напиши кол-во баллов и тип (дз/кдз/тест)')
+
+
+
+
+
+
+
+
+
+
+
+
+
+        elif call.data == 'bot_restart':
+            bot.send_message(call.message.chat.id, 'Функция перезагрузки бота. В разработке')
         else:
             pass
     except Exception as warring:
