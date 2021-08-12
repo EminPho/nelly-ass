@@ -88,16 +88,17 @@ def handler_commands (message):
 @bot.message_handler(content_types=["document", "photo"])
 def handler_file(message):
     try:
+        user = eval('user_config.'+message.chat.username+'.get')
         if message.content_type == 'photo':
             file_info = bot.get_file(message.photo[len(message.photo) - 1].file_id)
             downloaded_file = bot.download_file(file_info.file_path)
-            src =   user_config.hand_over.get('folder') + message.chat.username +'/lesson_'+user_config.Emin_Pho.get('log')+'/' + user_config.hand_over.get('handover') + '/'+ file_info.file_path
+            src =   user_config.hand_over.get('folder') + message.chat.username +'/lesson_'+user('log')+'/' + user_config.hand_over.get('handover') + '/'+ file_info.file_path
             with open(src, 'wb') as new_file:
                 new_file.write(downloaded_file)
         elif message.content_type == 'document':
             file_info = bot.get_file(message.document.file_id)
             downloaded_file = bot.download_file(file_info.file_path)
-            src =  user_config.hand_over.get('folder') + message.chat.username + '/lesson_'+user_config.Emin_Pho.get('log')+'/' + user_config.hand_over.get('handover') + '/' + file_info.file_path
+            src =  user_config.hand_over.get('folder') + message.chat.username + '/lesson_'+user('log')+'/' + user_config.hand_over.get('handover') + '/' + file_info.file_path
             with open(src, 'wb') as new_file:
                 new_file.write(downloaded_file)
         else:
@@ -106,9 +107,9 @@ def handler_file(message):
     except Exception as warring:
         bot.send_message(517561825, warring)
     else:
-        bot.send_message(392874912, message.chat.username + ' загрузил файлы')
+        bot.send_message(392874912, message.chat.username + ' загрузил файлы в урок №' + str(user('log')))
     finally:
-        bot.send_message(517561825, message.chat.username + ' загрузил файлы')
+        bot.send_message(517561825, message.chat.username + ' загрузил файлы в урок №' + str(user('log')))
 
 
 
@@ -319,11 +320,6 @@ def handler_call (call):
                     photo = open(part+i, 'rb')
                     bot.send_photo(call.message.chat.id, photo)
             bot.send_message(call.message.chat.id, 'ДЗ больше нет')
-
-
-
-
-
 
 
 

@@ -67,6 +67,7 @@ yannnut = {
 'homework_done' : 0,
 'creativework_done' : 0,
 'test_done' : 0,
+'log' : 'zero',
 }
 
 AnyaDD = {
